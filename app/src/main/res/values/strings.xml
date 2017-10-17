@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">PubLib App</string>
-    <string name="mainactivity_startertext">This app is designed to be used with books you have checked out your library.\n\nOnce you have checked out a book you can scan or enter the ISBN number to store it in your personal archive.\n\nBooks can selected or deselected as favorites.\n\nThe app also allows you to set a reminder to return the book. The reminder duration can be changed in the Settings section of the App.</string>
+    <string name="mainactivity_startertext">This app is designed to be used with books you have checked out of your library.\n\nOnce you have checked out a book you can scan or enter it\'s ISBN number to store in your personal archive.\n\nBooks can be selected or deselected as favorites.\n\nThe app also allows you to set a reminder to return the book back to the library. The reminder duration can be changed in the Settings section of the App.</string>
+    <string name="OK">OK</string>
+    <string name="Archive">Archive</string>
+    <string name="Favorites">Favorites</string>
+
 </resources>
