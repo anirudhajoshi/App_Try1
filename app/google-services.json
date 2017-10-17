@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "848507065505",
+    "firebase_url": "https://publibapp.firebaseio.com",
+    "project_id": "publibapp",
+    "storage_bucket": "publibapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848507065505:android:d25f9e44ed4d7314",
+        "android_client_info": {
+          "package_name": "com.example.aniru.publibapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848507065505-62bc61ip38elkm1creudt1kre5han3hm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aniru.publibapp",
+            "certificate_hash": "05527aae174285d056618a56de479437ec7168bd"
+          }
+        },
+        {
+          "client_id": "848507065505-8nd70phktdm77br5t6nulbid2f2jvum6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRqwx68GAxKwbn8eLvpyK4H3D43fZdKsQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848507065505-8nd70phktdm77br5t6nulbid2f2jvum6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
