@@ -42,7 +42,7 @@
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
                 android:onClick="OnOk"
-                android:text="@string/OK" />
+                android:text="@string/ButtonOK" />
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -62,8 +62,8 @@
                 android:id="@+id/btn_Archive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="25dp"
+
                 android:padding="16dp"
                 android:text="@string/Archive"
                 android:onClick="OnArchive"
@@ -73,11 +73,56 @@
                 android:id="@+id/btn_Favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="45dp"
+
                 android:onClick="OnFavorites"
-                android:layout_marginLeft="145dp"
-                android:padding="16dp"
+
+
                 android:text="@string/Favorites" />
+
+            <Button
+                android:id="@+id/btn_AddToArchive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:onClick="OnAddTestDataToArchive"
+
+
+                android:text="@string/AddToArchive" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_AddToFavorotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:onClick="OnAddTestDataToFavorites"
+
+
+                android:text="@string/AddToFavorites" />
+
+            <Button
+                android:id="@+id/btn_ClearArchive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:onClick="OnClearArchive"
+
+                android:text="@string/ClearArchive" />
+
+            <Button
+                android:id="@+id/btn_ClearFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:onClick="OnClearFavorites"
+
+                android:text="@string/ClearFavorites" />
+
         </LinearLayout>
 
     </LinearLayout>

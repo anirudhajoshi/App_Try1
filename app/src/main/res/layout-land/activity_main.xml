@@ -39,7 +39,7 @@
                 android:layout_width="88dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:text="@string/OK" />
+                android:text="@string/ButtonOK" />
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="wrap_content"
