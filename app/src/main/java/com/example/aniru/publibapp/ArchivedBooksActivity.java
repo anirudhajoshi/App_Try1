@@ -2,10 +2,8 @@ package com.example.aniru.publibapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.aniru.publibapp.FB.BookDetails_FB;
 import com.google.firebase.database.ChildEventListener;
@@ -15,20 +13,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class ArchiveActivity extends AppCompatActivity {
+public class ArchivedBooksActivity extends AppCompatActivity {
 
-    @BindView(R.id.rv_Archive)
-    RecyclerView rv_Archive;
+    @BindView(R.id.rv_ArchivedBooks)
+    RecyclerView rv_ArchivedBooks;
 
-    private BooksAdapter mBooksAdapter;
+    private ArchivedBooksAdapter mArchivedBooksAdapter;
 
-    ArrayList<BookDetails_FB> mBooks = new ArrayList<BookDetails_FB>();
+    ArrayList<BookDetails_FB> mArchivedBooks = new ArrayList<BookDetails_FB>();
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private ChildEventListener mChildEventListener;
@@ -36,23 +33,23 @@ public class ArchiveActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_archive);
+        setContentView(R.layout.activity_archivedbooks);
 
         ButterKnife.bind(this);
 
-        mBooksAdapter = new BooksAdapter(this, mBooks);
+        mArchivedBooksAdapter = new ArchivedBooksAdapter(this, mArchivedBooks);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rv_Archive.setLayoutManager(mLayoutManager);
+        rv_ArchivedBooks.setLayoutManager(mLayoutManager);
 
-        rv_Archive.setAdapter(mBooksAdapter);
+        rv_ArchivedBooks.setAdapter(mArchivedBooksAdapter);
 
         if( mChildEventListener == null) {
             mDatabase.child("archive").addChildEventListener(mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     BookDetails_FB bookDetails = dataSnapshot.getValue(BookDetails_FB.class);
-                    mBooks.add(bookDetails);
-                    mBooksAdapter.notifyDataSetChanged();
+                    mArchivedBooks.add(bookDetails);
+                    mArchivedBooksAdapter.notifyDataSetChanged();
                     Timber.d(bookDetails.getTitle());
                 }
 

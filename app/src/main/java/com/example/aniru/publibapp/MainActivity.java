@@ -69,13 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnArchive(View v) {
-
-        Intent intent = new Intent(this, ArchiveActivity.class);
+        Intent intent = new Intent(this, ArchivedBooksActivity.class);
         startActivity(intent);
     }
 
     public void OnFavorites(View v) {
-        Toast.makeText(this, "OnFavs", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, FavoriteBooksActivity.class);
+        startActivity(intent);
     }
 
     public void OnAddTestDataToArchive(View v) {

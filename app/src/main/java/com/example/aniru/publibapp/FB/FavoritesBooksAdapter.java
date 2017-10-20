@@ -1,41 +1,36 @@
-package com.example.aniru.publibapp;
+package com.example.aniru.publibapp.FB;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.aniru.publibapp.FB.BookDetails_FB;
+import com.example.aniru.publibapp.R;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by aniru on 10/20/2017.
  */
 
-public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
+public class FavoritesBooksAdapter extends RecyclerView.Adapter<FavoritesBooksAdapter.ViewHolder> {
 
-    ArrayList<BookDetails_FB> mArchivedBooks;
+    ArrayList<BookDetails_FB> mFavoritesBooks;
     Context mContext;
 
     TextView tv_BookTitle, tv_BookISBN, tv_BookPageCount;
 
-    public BooksAdapter(Context context, ArrayList<BookDetails_FB> archivedfbBooks){
-        mArchivedBooks = archivedfbBooks;
+    public FavoritesBooksAdapter(Context context, ArrayList<BookDetails_FB> books){
+        mFavoritesBooks = books;
         mContext = context;
     }
 
     @Override
-    public BooksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FavoritesBooksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_archive, parent, false);
+                .inflate(R.layout.item_archivedbooks, parent, false);
 
         return new ViewHolder(itemView);
     }
@@ -43,14 +38,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        tv_BookTitle.setText(mArchivedBooks.get(position).getTitle());
-        tv_BookISBN.setText(mArchivedBooks.get(position).getIsbn());
-        tv_BookPageCount.setText(Integer.toString(mArchivedBooks.get(position).getPageCount()));
+        tv_BookTitle.setText(mFavoritesBooks.get(position).getTitle());
+        tv_BookISBN.setText(mFavoritesBooks.get(position).getIsbn());
+        tv_BookPageCount.setText(Integer.toString(mFavoritesBooks.get(position).getPageCount()));
     }
 
     @Override
     public int getItemCount() {
-        return mArchivedBooks.size();
+        return mFavoritesBooks.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
