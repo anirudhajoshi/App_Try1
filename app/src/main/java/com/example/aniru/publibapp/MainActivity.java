@@ -1,8 +1,8 @@
 package com.example.aniru.publibapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,36 +14,50 @@ import com.example.aniru.publibapp.FB.TestData;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean mSignOutState;
+    public static final int RC_SIGN_IN = 1;
 
     private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabase;
 
     private TestData mTestData = new TestData();
 
+    boolean mSignedOutState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
         FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
         if( currentUser==null ){
-            mSignOutState = false;
+            HideSignOutMenuItem();
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
+                            .setAvailableProviders(
+                                    Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build())
+                            )
+                            .build(),
+                    RC_SIGN_IN);
         }
         else{
-            mSignOutState = true;
+            ShowSignOutMenuItem();
         }
-
-        invalidateOptionsMenu();
     }
 
     public void OnOk(View v) {
@@ -55,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnArchive(View v) {
-        Toast.makeText(this, "OnArchive", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, ArchiveActivity.class);
+        startActivity(intent);
     }
 
     public void OnFavorites(View v) {
@@ -64,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnAddTestDataToArchive(View v) {
         List<BookDetails_FB> archiveBooks = mTestData.SetupArchiveTestData();
-        for(int i=0;i<archiveBooks.size();i++)
+        for(int i=0;i<archiveBooks.size();i++) {
             Timber.d(archiveBooks.get(i).getTitle());
+            mDatabase.child("archive").push().setValue(archiveBooks.get(i));
+        }
 
         mTestData.Clear();
     }
@@ -74,17 +92,32 @@ public class MainActivity extends AppCompatActivity {
         List<BookDetails_FB> favBooks =  mTestData.SetupFavoriteTestData();
         for(int i=0;i<favBooks.size();i++) {
             Timber.d(favBooks.get(i).getTitle());
+            mDatabase.child("favorites").push().setValue(favBooks.get(i));
         }
 
         mTestData.Clear();
     }
 
     public void OnClearArchive(View v) {
-        Toast.makeText(this, "Clear archive here", Toast.LENGTH_SHORT).show();
+
+       try {
+           mDatabase.getDatabase().getReference().getRoot().child("archive").setValue(null);
+       }
+       catch (Exception e){
+           Timber.d(e.toString());
+           Toast.makeText(this, getString(R.string.clearArchiveException), Toast.LENGTH_SHORT).show();
+       }
+
     }
 
     public void OnClearFavorites(View v) {
-        Toast.makeText(this, "Clear favorites here", Toast.LENGTH_SHORT).show();
+        try {
+            mDatabase.getDatabase().getReference().getRoot().child("favorites").setValue(null);
+        }
+        catch (Exception e){
+            Timber.d(e.toString());
+            Toast.makeText(this, getString(R.string.clearArchiveException), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -94,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem menuItem_SignOut = (MenuItem) menu.findItem(R.id.sign_out);
 
-        if( mSignOutState==false ){
+        if( mSignedOutState ==false ){
             menuItem_SignOut.setVisible(false);
         }
         else{
@@ -111,9 +144,32 @@ public class MainActivity extends AppCompatActivity {
             case R.id.sign_out:
                 AuthUI.getInstance().signOut(this);
                 Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
+                HideSignOutMenuItem();
+                // finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void HideSignOutMenuItem() {
+        mSignedOutState = false;
+        invalidateOptionsMenu();
+    }
+
+    private void ShowSignOutMenuItem() {
+        mSignedOutState = true;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if( requestCode==RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                ShowSignOutMenuItem();
+            }
         }
     }
 }

@@ -24,4 +24,7 @@
     <string name="AddToFavorites">Add to Favorites</string>
     <string name="ClearArchive">Clear Archive</string>
     <string name="ClearFavorites">Clear Favorites</string>
+
+    <string name="clearArchiveException">Could not clear the archive</string>
+
 </resources>
